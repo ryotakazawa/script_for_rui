@@ -1,0 +1,45 @@
+function myFunction() {
+  var SheetName=SpreadsheetApp.getActiveSheet();
+　var SheetRow=SheetName.getDataRange().getLastRow();
+
+ 
+
+　var docMail=DocumentApp.openById("hogehoge");
+　var strDoc=docMail.getBody().getText();
+
+ 
+
+　var strSubj="新商品紹介のお知らせとお願い"; //タイトル
+　var strFrom="hogehoge"; //Fromのアドレス
+　var strSend="Ichirou Tanaka"; //差出人の名前
+
+ 
+
+　for(var i=2;i<=SheetRow;i++){
+
+ 
+
+　　var strComp=SheetName.getRange(i,1).getValue();
+　　var strName=SheetName.getRange(i,2).getValue();
+　　var strToAd=SheetName.getRange(i,3).getValue();
+
+ 
+
+　　var strBody=strDoc.replace(/{社名}/,strComp).replace(/{担当者名}/,strName);
+
+ 
+
+　　GmailApp.sendEmail(
+　　　strToAd,
+　　　strSubj,
+　　　strBody,
+　　　{
+　　　　from: strFrom,
+　　　　name: strSend
+　　　}
+　　);
+
+ 
+
+　}
+}
